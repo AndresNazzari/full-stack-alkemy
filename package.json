@@ -1,0 +1,34 @@
+{
+    "name": "full-stack-alkemy",
+    "version": "1.0.0",
+    "description": "CHALLENGE FULL STACK - JavaScript 🚀 for Alkemy",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AndresNazzari/full-stack-alkemy.git"
+    },
+    "author": "Andres J. Nazzari",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/AndresNazzari/full-stack-alkemy/issues"
+    },
+    "homepage": "https://github.com/AndresNazzari/full-stack-alkemy#readme",
+    "dependencies": {
+        "axios": "^0.27.2",
+        "bcryptjs": "^2.4.3",
+        "config": "^3.3.7",
+        "express": "^4.18.1",
+        "express-validator": "^6.14.0",
+        "jsonwebtoken": "^8.5.1",
+        "knex": "^2.0.0",
+        "moment": "^2.29.3",
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.16",
+        "request": "^2.88.2",
+        "uuid": "^8.3.2"
+    }
+}
