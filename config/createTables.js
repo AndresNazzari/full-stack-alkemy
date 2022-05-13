@@ -3,7 +3,6 @@ import { configDb } from './db_connection.js';
 
 export const createTables = async () => {
     const databaseName = process.env.DB_NAME;
-    const dbTables = ['income', 'expense', 'categories', 'users'];
 
     configDb.connection.database = databaseName;
 
@@ -11,71 +10,79 @@ export const createTables = async () => {
 
     try {
         //crea tabla categories
-        let hasTable = await db.schema.hasTable(dbTables[2]);
+        let hasTable = await db.schema.hasTable('categories');
         if (!hasTable) {
-            await db.schema.createTable(dbTables[2], (table) => {
+            await db.schema.createTable('categories', (table) => {
                 table.increments('category_id');
                 table.string('category');
                 table.string('created_at');
             });
-            console.log(`Table created: ${dbTables[2]}`);
+            console.log(`Table created: ${'categories'}`);
         } else {
-            console.log(`Ya existe la tabla ${dbTables[2]}`);
+            console.log(`Ya existe la tabla ${'categories'}`);
         }
         // //crea tabla users
-        hasTable = await db.schema.hasTable(dbTables[3]);
+        hasTable = await db.schema.hasTable('users');
         if (!hasTable) {
-            await db.schema.createTable(dbTables[3], (table) => {
+            await db.schema.createTable('users', (table) => {
                 table.increments('user_id');
                 table.string('email');
                 table.string('password');
                 table.string('created_at');
             });
-            console.log(`Table created: ${dbTables[3]}`);
+            console.log(`Table created: ${'users'}`);
         } else {
-            console.log(`Ya existe la tabla ${dbTables[3]}`);
+            console.log(`Ya existe la tabla ${'users'}`);
         }
         //crea tabla income
-        hasTable = await db.schema.hasTable(dbTables[0]);
+        hasTable = await db.schema.hasTable('income');
         if (!hasTable) {
-            await db.schema.createTable(dbTables[0], (table) => {
-                table.increments('indome_id');
+            await db.schema.createTable('income', (table) => {
+                table.increments('income_id');
                 table.string('concept');
                 table.string('amount');
                 table.string('date');
                 table
-                    .integer('category_id')
+                    .integer('category_id', 10)
+                    .notNullable()
+                    .unsigned()
                     .references('category_id')
-                    .inTable(dbTables[2]);
+                    .inTable('categories');
                 table
-                    .integer('user_id')
+                    .integer('user_id', 10)
+                    .notNullable()
+                    .unsigned()
                     .references('user_id')
-                    .inTable(dbTables[3]);
+                    .inTable('users');
             });
-            console.log(`Table created: ${dbTables[0]}`);
+            console.log(`Table created: ${'income'}`);
         } else {
-            console.log(`Ya existe la tabla ${dbTables[0]}`);
+            console.log(`Ya existe la tabla ${'income'}`);
         }
         //crea tabla expenses
-        hasTable = await db.schema.hasTable(dbTables[1]);
+        hasTable = await db.schema.hasTable('expense');
         if (!hasTable) {
-            await db.schema.createTable(dbTables[1], (table) => {
+            await db.schema.createTable('expense', (table) => {
                 table.increments('expense_id');
                 table.string('concept');
                 table.string('amount');
                 table.string('date');
                 table
-                    .integer('category_id')
+                    .integer('category_id', 10)
+                    .notNullable()
+                    .unsigned()
                     .references('category_id')
-                    .inTable(dbTables[2]);
+                    .inTable('categories');
                 table
-                    .integer('user_id')
+                    .integer('user_id', 10)
+                    .notNullable()
+                    .unsigned()
                     .references('user_id')
-                    .inTable(dbTables[3]);
+                    .inTable('users');
             });
-            console.log(`Table created: ${dbTables[1]}`);
+            console.log(`Table created: ${'expense'}`);
         } else {
-            console.log(`Ya existe la tabla ${dbTables[1]}`);
+            console.log(`Ya existe la tabla ${'expense'}`);
         }
 
         await db.destroy();
