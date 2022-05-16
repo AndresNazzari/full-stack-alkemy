@@ -12,7 +12,7 @@ export const createTables = async () => {
         if (!hasTable) {
             await db.schema.createTable('categories', (table) => {
                 table.increments('category_id');
-                table.string('category');
+                table.string('name');
                 table.string('created_at');
             });
             console.log(`📄 Table created: ${'categories'}`);
