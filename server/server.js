@@ -1,8 +1,8 @@
 import express from 'express';
-import { expense } from './routes/api/expense.route.js';
+/* import { expense } from './routes/api/expense.route.js';
 import { income } from './routes/api/income.route.js';
-import { auth } from './routes/api/auth.route.js';
-import { users } from './routes/api/users.route.js';
+import { auth } from './routes/api/auth.route.js'; */
+import { UserRoute } from './routes/api/user.route.js';
 import { createTables } from './config/createTables.js';
 import { createDatabase } from './config/createDatabase.js';
 import dotenv from 'dotenv';
@@ -18,10 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //define routes
-app.use('/api/income', income);
+/* app.use('/api/income', income);
 app.use('/api/outcome', expense);
-app.use('/api/auth', auth);
-app.use('/api/users', users);
+app.use('/api/auth', auth); */
+app.use('/api/user', new UserRoute());
 
 app.all('*', function (req, res) {
     res.send({ error: `route ${req.path} and method ${req.method} undefined` });
@@ -37,6 +37,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const server = app.listen(PORT, () => {
-    console.log(`Server started on port  ${server.address().port}`);
+    console.log(`🚀 Server started on port  ${server.address().port}`);
 });
 server.on('error', (error) => console.log(`Error on server ${error}`));

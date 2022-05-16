@@ -1,4 +1,4 @@
-import jsonwebtoken from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 export default function auth(req, res, next) {
     // Get token from header
@@ -11,7 +11,7 @@ export default function auth(req, res, next) {
 
     //Verify token
     try {
-        const decoded = jsonwebtoken.verify(token, proces.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded.user;
         next();
     } catch (err) {

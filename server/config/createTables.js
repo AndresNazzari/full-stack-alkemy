@@ -3,9 +3,7 @@ import { configDb } from './db_connection.js';
 
 export const createTables = async () => {
     const databaseName = process.env.DB_NAME;
-
     configDb.connection.database = databaseName;
-
     const db = knex(configDb);
 
     try {
@@ -17,22 +15,24 @@ export const createTables = async () => {
                 table.string('category');
                 table.string('created_at');
             });
-            console.log(`Table created: ${'categories'}`);
+            console.log(`📄 Table created: ${'categories'}`);
         } else {
-            console.log(`Ya existe la tabla ${'categories'}`);
+            console.log(`📄 ${'categories'} table already exists`);
         }
         // //crea tabla users
         hasTable = await db.schema.hasTable('users');
         if (!hasTable) {
             await db.schema.createTable('users', (table) => {
                 table.increments('user_id');
-                table.string('email');
+                table.string('name');
+                table.string('email').unique();
+                table.string('avatar');
                 table.string('password');
                 table.string('created_at');
             });
-            console.log(`Table created: ${'users'}`);
+            console.log(`📄 Table created: ${'users'}`);
         } else {
-            console.log(`Ya existe la tabla ${'users'}`);
+            console.log(`📄 ${'users'} table already exists`);
         }
         //crea tabla income
         hasTable = await db.schema.hasTable('income');
@@ -55,9 +55,9 @@ export const createTables = async () => {
                     .references('user_id')
                     .inTable('users');
             });
-            console.log(`Table created: ${'income'}`);
+            console.log(`📄 Table created: ${'income'}`);
         } else {
-            console.log(`Ya existe la tabla ${'income'}`);
+            console.log(`📄 ${'income'} table already exists`);
         }
         //crea tabla expenses
         hasTable = await db.schema.hasTable('expense');
@@ -80,9 +80,9 @@ export const createTables = async () => {
                     .references('user_id')
                     .inTable('users');
             });
-            console.log(`Table created: ${'expense'}`);
+            console.log(`📄 Table created: ${'expense'}`);
         } else {
-            console.log(`Ya existe la tabla ${'expense'}`);
+            console.log(`📄 ${'expense'} table already exists`);
         }
 
         await db.destroy();
