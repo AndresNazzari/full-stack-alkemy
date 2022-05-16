@@ -15,43 +15,38 @@ export default class CategoryController {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const { categoryId, categoryName } = req.body;
-        try {
-            //check if category exists
-            const queryResult = await this.userService.categoryExists(
-                categoryName
-            );
-            if (queryResult.length > 0) {
-                return res
-                    .status(400)
-                    .json({ errors: [{ msg: 'Category already exists' }] });
-            }
+        const { name } = req.body;
 
+        try {
             //Add category to database
-            await this.userService.addCategory(categoryName);
+            await this.categoryService.addCategory(name);
+            res.status(200).json({ msg: 'Category created' });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');
         }
     }
+
     async removeCategory(req, res) {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { categoryId } = req.body;
+        const { category_id } = req.body;
         try {
             //check if category exists
-            const queryResult = await this.userService.categoryExists(
-                categoryId
+            const queryResult = await this.categoryService.categoryExists(
+                category_id
             );
+
             if (queryResult.length <= 0) {
                 return res
                     .status(400)
                     .json({ errors: [{ msg: "Category didn't exists" }] });
             }
-            await this.userService.removeCategory(categoryId);
+            await this.categoryService.removeCategory(category_id);
+            res.status(200).json({ msg: 'Category deleted' });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');

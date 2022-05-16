@@ -1,3 +1,4 @@
+import knex from 'knex';
 import { configDb } from '../config/db_connection.js';
 
 export default class CategoryService {
@@ -11,48 +12,31 @@ export default class CategoryService {
             .from('categories')
             .where('category_id', categoryId);
     }
-    async addCategory(category) {
+
+    async addCategory(categoryName) {
         return await this.knex('categories').insert({
-            category,
+            name: categoryName,
             created_at: new Date(),
         });
     }
 
-    async removeCategory(param) {
-        const result = await this.knex({
-            inc: 'income',
-            exp: 'expense',
-            cat: 'categories',
-        })
-            .select(
-                'cat.category_id',
-                'cat.name',
-                'inc.category_id',
-                'exp.category_id'
+    async removeCategory(categoryId) {
+        /*  const result = await this.knex
+            .from('categories')
+            .leftJoin('income', 'categories.category_id', 'income.category_id')
+            .where('categories.category_id', categoryId);
+
+        const result2 = await this.knex
+            .from('categories')
+            .leftJoin(
+                'expense',
+                'categories.category_id',
+                'expense.category_id'
             )
-            .where('inc.category_id', param)
-            .orWhere('exp.category_id', param);
+            .where('categories.category_id', categoryId);
 
-        if (result.length > 0) {
-            return result;
-        }
-        return await this.knex('categories').where('category_id', param).del();
+        console.log(result);
+        console.log(result2);
+        */
     }
-
-    /* category.category_id,
-            category.name,
-            income.category_id,
-            expense.category_id, */
-    /*         knex.select([
-            'driverProfile.driverID',
-            'driverProfile.dCarID',
-            'driverProfile.dDeviceID',
-            'carProfile.carRegiNum',
-        ])
-            .from('driverProfile')
-            .innerJoin('carProfile', 'carProfile.carID', 'driverProfile.dCarID')
-            .where('driverProfile.dManagerID', 7)
-            .then(function (output) {
-                //Deal with the output data here
-            }); */
 }
