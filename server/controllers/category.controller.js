@@ -15,7 +15,7 @@ export default class CategoryController {
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        const { categoryName } = req.body;
+        const { categoryId, categoryName } = req.body;
         try {
             //check if category exists
             const queryResult = await this.userService.categoryExists(
@@ -29,9 +29,6 @@ export default class CategoryController {
 
             //Add category to database
             await this.userService.addCategory(categoryName);
-            res.status(200).json({
-                errors: [{ msg: 'Category added' }],
-            });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');
@@ -41,6 +38,23 @@ export default class CategoryController {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
+        }
+
+        const { categoryId } = req.body;
+        try {
+            //check if category exists
+            const queryResult = await this.userService.categoryExists(
+                categoryId
+            );
+            if (queryResult.length <= 0) {
+                return res
+                    .status(400)
+                    .json({ errors: [{ msg: "Category didn't exists" }] });
+            }
+            await this.userService.removeCategory(categoryId);
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send('Server Error');
         }
     }
 }
