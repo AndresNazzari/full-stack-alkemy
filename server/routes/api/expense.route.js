@@ -24,11 +24,11 @@ export class ExpenseRoute extends express.Router {
         );
 
         //@route    GET api/expense
-        //@desc     Add expense
+        //@desc     Get all expenses
         //@access   Private
         this.get('/', auth, this.expenseController.getExpenses);
 
-        //@route    PUT api/expense
+        //@route    PUT api/expense/:expense_id
         //@desc     Remove expense
         //@access   Private
         this.put(

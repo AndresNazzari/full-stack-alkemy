@@ -1,7 +1,7 @@
 import ExpenseService from '../services/expense.service.js';
 import { validationResult } from 'express-validator';
 
-export default class CategoryController {
+export default class ExpenseController {
     constructor() {
         this.expenseService = new ExpenseService();
 
@@ -68,5 +68,16 @@ export default class CategoryController {
         }
     }
 
-    async removeExpense(req, res) {}
+    async removeExpense(req, res) {
+        const { expense_id } = req.params;
+
+        try {
+            await this.expenseService.removeExpense(expense_id);
+
+            res.status(200).json({ msg: 'Expense removed' });
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send('Server Error');
+        }
+    }
 }

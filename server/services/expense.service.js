@@ -1,10 +1,7 @@
 import knex from 'knex';
 import { configDb } from '../config/db_connection.js';
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import gravatar from 'gravatar';
 
-export default class UserService {
+export default class ExpenseService {
     constructor() {
         this.knex = knex(configDb);
     }
@@ -32,5 +29,7 @@ export default class UserService {
             })
             .where({ expense_id });
     }
-    async removeExpense() {}
+    async removeExpense(expense_id) {
+        return await this.knex('expense').where({ expense_id }).del();
+    }
 }
