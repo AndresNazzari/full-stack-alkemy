@@ -1,7 +1,7 @@
 import express from 'express';
 import { UserRoute } from './routes/api/user.route.js';
 import { CategoryRoute } from './routes/api/category.route.js';
-
+import { ExpenseRoute } from './routes/api/expense.route.js';
 import { createTables } from './config/createTables.js';
 import { createDatabase } from './config/createDatabase.js';
 import dotenv from 'dotenv';
@@ -22,6 +22,7 @@ app.use('/api/outcome', expense);
 app.use('/api/auth', auth); */
 app.use('/api/user', new UserRoute());
 app.use('/api/category', new CategoryRoute());
+app.use('/api/expense', new ExpenseRoute());
 
 app.all('*', function (req, res) {
     res.send({ error: `route ${req.path} and method ${req.method} undefined` });
