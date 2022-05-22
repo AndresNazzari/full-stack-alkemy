@@ -20,6 +20,9 @@ export default class CategoryService {
         });
     }
 
+    async getCategories() {
+        return await this.knex('categories').select('*');
+    }
     async removeCategory(categoryId) {
         /*  const result = await this.knex
             .from('categories')

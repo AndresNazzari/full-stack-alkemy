@@ -3,8 +3,6 @@ import CategoryController from '../../controllers/category.controller.js';
 import { check } from 'express-validator';
 import auth from '../../middleware/auth.middleware.js';
 
-const router = express.Router();
-
 export class CategoryRoute extends express.Router {
     constructor() {
         super();
@@ -20,14 +18,19 @@ export class CategoryRoute extends express.Router {
             this.categoryController.createCategory
         );
 
+        //@route    GET api/category
+        //@desc     Get all categories
+        //@access   Private
+        this.get('/', auth, this.categoryController.getCategories);
+
         //@route    DELETE api/category
         //@desc     Create category
         //@access   Private
-        this.delete(
+        /* this.delete(
             '/',
             auth,
             [check('name', 'Name is Required').not().isEmpty()],
             this.categoryController.removeCategory
-        );
+        ); */
     }
 }

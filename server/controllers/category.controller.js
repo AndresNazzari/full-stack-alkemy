@@ -7,6 +7,7 @@ export default class CategoryController {
 
         this.createCategory = this.createCategory.bind(this);
         this.removeCategory = this.removeCategory.bind(this);
+        this.getCategories = this.getCategories.bind(this);
     }
 
     async createCategory(req, res) {
@@ -21,6 +22,16 @@ export default class CategoryController {
             //Add category to database
             await this.categoryService.addCategory(name);
             res.status(200).json({ msg: 'Category created' });
+        } catch (error) {
+            console.error(error.message);
+            res.status(500).send('Server Error');
+        }
+    }
+
+    async getCategories(req, res) {
+        try {
+            const categories = await this.categoryService.getCategories();
+            res.status(200).json({ categories });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');
