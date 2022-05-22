@@ -91,7 +91,8 @@ export default class UserController {
 
     async getUser(req, res) {
         try {
-            const user = await this.userService.getUsers(req.user.id);
+            const { user_id } = req.params;
+            const user = await this.userService.getUser(user_id);
             res.status(200).json({ user: user[0] });
         } catch (error) {
             console.error(error.message);

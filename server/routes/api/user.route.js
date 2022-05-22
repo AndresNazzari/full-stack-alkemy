@@ -3,8 +3,6 @@ import UserController from '../../controllers/user.controller.js';
 import { check } from 'express-validator';
 import auth from '../../middleware/auth.middleware.js';
 
-const router = express.Router();
-
 export class UserRoute extends express.Router {
     constructor() {
         super();
@@ -38,9 +36,9 @@ export class UserRoute extends express.Router {
             this.userController.loginUser
         );
 
-        //@route    GET api/user
+        //@route    GET api/user/:user_id
         //@desc     Get user by email
         //@access   Public
-        this.get('/', auth, this.userController.getUser);
+        this.get('/:user_id', auth, this.userController.getUser);
     }
 }

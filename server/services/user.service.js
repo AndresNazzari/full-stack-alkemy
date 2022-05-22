@@ -34,7 +34,7 @@ export default class UserService {
     generateToken(email) {
         const payload = { user: { id: email } };
         return jwt.sign(payload, process.env.JWT_SECRET, {
-            expiresIn: 3600000,
+            expiresIn: 60 /*seconds*/ * 60 * 24,
         });
     }
     async getGravatar(email) {
@@ -45,7 +45,10 @@ export default class UserService {
         });
     }
 
-    async getUsers(email) {
-        return await this.knex.select('*').from('users').where('email', email);
+    async getUser(user_id) {
+        return await this.knex
+            .select('*')
+            .from('users')
+            .where('user_id', user_id);
     }
 }
