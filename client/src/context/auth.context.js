@@ -1,22 +1,28 @@
 import { createContext, useContext, useState } from 'react';
-const cartContext = createContext(); //me devuelve 2 componentes, Provider y Consumer. EL PROVIDER ES NECESARIO PARA ESCRIBIR EL CONTEXTO. EL CONTEXTO POR SI SOLO ES DE SOLO LECTURA
 
-export const { Provider } = cartContext;
+const authContext = createContext();
 
-export const useCartContext = () => {
-    return useContext(cartContext);
+export const { Provider } = authContext;
+export const useAuthContext = () => {
+    return useContext(authContext);
 };
 
 const CustomProvider = ({ children }) => {
     const [token, setToken] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const addToken = (token) => {
         setToken(token);
     };
 
+    const authenticate = () => {
+        setIsAuthenticated(!isAuthenticated);
+    };
     const valorDelContexto = {
         token,
+        isAuthenticated,
         addToken,
+        authenticate,
     };
 
     return <Provider value={valorDelContexto}>{children}</Provider>;

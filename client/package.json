@@ -9,7 +9,6 @@
     },
     "author": "Andres J. Nazzari",
     "dependencies": {
-        "@reduxjs/toolkit": "^1.8.1",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.2.0",
         "@testing-library/user-event": "^13.5.0",
@@ -22,10 +21,6 @@
         "react-router-dom": "^6.3.0",
         "react-scripts": "5.0.1",
         "react-select": "^5.3.2",
-        "redux": "^4.2.0",
-        "redux-actions": "^2.6.5",
-        "redux-cache": "^0.3.0",
-        "redux-thunk": "^2.4.1",
         "sass": "^1.52.1",
         "uuid": "^8.3.2",
         "web-vitals": "^2.1.4"
