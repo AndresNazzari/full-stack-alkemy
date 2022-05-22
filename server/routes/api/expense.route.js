@@ -15,7 +15,6 @@ export class ExpenseRoute extends express.Router {
             '/',
             auth,
             [
-                check('expense_id', 'Expense ID is Required').not().isEmpty(),
                 check('concept', 'Concept is Required').not().isEmpty(),
                 check('amount', 'Amount is Required').not().isEmpty(),
                 check('category_id', 'Category is Required').not().isEmpty(),
@@ -32,7 +31,16 @@ export class ExpenseRoute extends express.Router {
         //@route    PUT api/expense
         //@desc     Remove expense
         //@access   Private
-        this.put('/:expense_id', auth, this.expenseController.updateExpense);
+        this.put(
+            '/:expense_id',
+            auth,
+            [
+                check('concept', 'Concept is Required').not().isEmpty(),
+                check('amount', 'Amount is Required').not().isEmpty(),
+                check('category_id', 'Category is Required').not().isEmpty(),
+            ],
+            this.expenseController.updateExpense
+        );
 
         //@route    DELETE api/expense
         //@desc     Remove expense

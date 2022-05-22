@@ -9,8 +9,28 @@ export default class UserService {
         this.knex = knex(configDb);
     }
 
-    async addExpense(req, res) {}
-    async getExpenses(req, res) {}
-    async updateExpense(req, res) {}
-    async removeExpense(req, res) {}
+    async addExpense(concept, amount, category_id, user_id) {
+        return await this.knex('expense').insert({
+            concept,
+            amount,
+            date: new Date(),
+            category_id,
+            user_id,
+        });
+    }
+
+    async getExpenses() {
+        return await this.knex('expense').select('*');
+    }
+
+    async updateExpense(expense_id, concept, amount, category_id) {
+        return await this.knex('expense')
+            .update({
+                concept,
+                amount,
+                category_id,
+            })
+            .where({ expense_id });
+    }
+    async removeExpense() {}
 }
