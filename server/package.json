@@ -1,7 +1,7 @@
 {
     "name": "full-stack-alkemy",
     "version": "1.0.0",
-    "description": "CHALLENGE FULL STACK - JavaScript 🚀 for Alkemy",
+    "description": "CHALLENGE FULL STACK - JavaScript 🚀 for Alkemy, Backend Sector",
     "main": "server.js",
     "type": "module",
     "scripts": {
