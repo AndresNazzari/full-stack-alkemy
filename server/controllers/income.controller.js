@@ -69,11 +69,10 @@ export default class IncomeController {
     }
 
     async removeIncome(req, res) {
-        const { Incincome_idome_id } = req.params;
+        const { income_id } = req.params;
 
         try {
             await this.incomeService.removeIncome(income_id);
-
             res.status(200).json({ msg: 'Income removed' });
         } catch (error) {
             console.error(error.message);
