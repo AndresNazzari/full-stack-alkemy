@@ -10,19 +10,15 @@ export const useAuthContext = () => {
 const CustomProvider = ({ children }) => {
     const [token, setToken] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [loginError, setLoginError] = useState(false);
 
-    const addToken = (token) => {
-        setToken(token);
-    };
-
-    const authenticate = () => {
-        setIsAuthenticated(!isAuthenticated);
-    };
     const valorDelContexto = {
         token,
         isAuthenticated,
-        addToken,
-        authenticate,
+        loginError,
+        setToken,
+        setIsAuthenticated,
+        setLoginError,
     };
 
     return <Provider value={valorDelContexto}>{children}</Provider>;
