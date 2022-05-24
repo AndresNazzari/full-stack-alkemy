@@ -6,11 +6,11 @@ export default class ExpenseService {
         this.knex = knex(configDb);
     }
 
-    async addExpense(concept, amount, category_id, user_id) {
+    async addExpense(concept, amount, date, category_id, user_id) {
         return await this.knex('expense').insert({
             concept,
             amount,
-            date: new Date(),
+            date,
             category_id,
             user_id,
         });
@@ -20,11 +20,12 @@ export default class ExpenseService {
         return await this.knex('expense').select('*');
     }
 
-    async updateExpense(expense_id, concept, amount, category_id) {
+    async updateExpense(expense_id, concept, amount, date, category_id) {
         return await this.knex('expense')
             .update({
                 concept,
                 amount,
+                date,
                 category_id,
             })
             .where({ expense_id });

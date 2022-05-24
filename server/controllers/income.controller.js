@@ -18,11 +18,12 @@ export default class IncomeController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { concept, amount, category_id, user_id } = req.body;
+        const { concept, amount, date, category_id, user_id } = req.body;
         try {
             await this.incomeService.addIncome(
                 concept,
                 amount,
+                date,
                 category_id,
                 user_id
             );
@@ -51,13 +52,14 @@ export default class IncomeController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { concept, amount, category_id } = req.body;
+        const { concept, amount, date, category_id } = req.body;
         const { income_id } = req.params;
         try {
             await this.incomeService.updateIncome(
                 income_id,
                 concept,
                 amount,
+                date,
                 category_id
             );
 

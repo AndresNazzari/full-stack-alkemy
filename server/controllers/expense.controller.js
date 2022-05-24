@@ -18,11 +18,12 @@ export default class ExpenseController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { concept, amount, category_id, user_id } = req.body;
+        const { concept, amount, category_id, user_id, date } = req.body;
         try {
             await this.expenseService.addExpense(
                 concept,
                 amount,
+                date,
                 category_id,
                 user_id
             );
@@ -51,13 +52,14 @@ export default class ExpenseController {
             return res.status(400).json({ errors: errors.array() });
         }
 
-        const { concept, amount, category_id } = req.body;
+        const { concept, amount, date, category_id } = req.body;
         const { expense_id } = req.params;
         try {
             await this.expenseService.updateExpense(
                 expense_id,
                 concept,
                 amount,
+                date,
                 category_id
             );
 

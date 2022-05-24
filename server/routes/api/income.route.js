@@ -17,6 +17,7 @@ export class IncomeRoute extends express.Router {
             [
                 check('concept', 'Concept is Required').not().isEmpty(),
                 check('amount', 'Amount is Required').not().isEmpty(),
+                check('date', 'Date is Required').not().isEmpty(),
                 check('category_id', 'Category is Required').not().isEmpty(),
                 check('user_id', 'User ID is Required').not().isEmpty(),
             ],
@@ -37,6 +38,7 @@ export class IncomeRoute extends express.Router {
             [
                 check('concept', 'Concept is Required').not().isEmpty(),
                 check('amount', 'Amount is Required').not().isEmpty(),
+                check('date', 'Date is Required').not().isEmpty(),
                 check('category_id', 'Category is Required').not().isEmpty(),
             ],
             this.incomeController.updateIncome
