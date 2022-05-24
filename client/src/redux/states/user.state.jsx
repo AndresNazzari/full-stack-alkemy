@@ -13,20 +13,37 @@ export const initialState = {
 };
 
 export const userSlice = createSlice({
-    name: 'user',
+    name: 'userReducer',
     initialState: initialState,
     reducers: {
-        clearToken: (state, action) => initialState,
+        clearLogin: (state, action) => {
+            localStorage.removeItem('token');
+            return initialState;
+        },
         requestLogin: (state, action) => ({
             ...state,
             fetchState: FetchState.FETCHING,
         }),
-        requestLoginSuccess: (state, action) => ({
+        requestLoginSuccess: (state, action) => {
+            localStorage.setItem('userToken', action.payload.token);
+            return {
+                ...state,
+                userToken: action.payload.token,
+                isAuthenticated: true,
+                fetchState: FetchState.FETCHED,
+            };
+        },
+        requestLoadSuccess(state, action) {
+            return {
+                ...state,
+                ...action.payload.user,
+                isAuthenticated: true,
+                fetchState: FetchState.FETCHED,
+            };
+        },
+        setToken: (state, action) => ({
             ...state,
-            ...action.payload,
             userToken: action.payload.userToken,
-            isAuthenticated: true,
-            fetchState: FetchState.FETCHED,
         }),
         requestLoginFailed: (state, action) => {
             localStorage.removeItem('userToken');
@@ -42,9 +59,11 @@ export const userSlice = createSlice({
 });
 
 export const {
-    clearToken,
+    clearLogin,
     requestLogin,
     requestLoginSuccess,
+    requestLoadSuccess,
+    setToken,
     requestLoginFailed,
 } = userSlice.actions;
 

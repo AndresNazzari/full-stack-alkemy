@@ -56,7 +56,6 @@ export default class UserController {
     async loginUser(req, res) {
         //check if errors in validation
         const errors = validationResult(req);
-
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
@@ -82,6 +81,7 @@ export default class UserController {
                     .json({ errors: [{ msg: 'Invalid Credentials' }] });
             }
             //Return jsonwebtoken
+
             const token = this.userService.generateToken(queryResult[0].email);
             res.status(200).json({ token });
         } catch (error) {
@@ -92,8 +92,8 @@ export default class UserController {
 
     async getUser(req, res) {
         try {
-            const { user_id } = req.params;
-            const user = await this.userService.getUser(user_id);
+            const email = req.user.id;
+            const user = await this.userService.getUser(email);
             res.status(200).json({ user: user[0] });
         } catch (error) {
             console.error(error.message);

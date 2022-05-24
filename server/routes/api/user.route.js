@@ -32,13 +32,16 @@ export class UserRoute extends express.Router {
             [
                 check('email', 'Please include a valid email.').isEmail(),
                 check('password', 'Please enter a password.').exists(),
+                check('password', 'Please enter a valid password.').isLength({
+                    min: 3,
+                }),
             ],
             this.userController.loginUser
         );
 
-        //@route    GET api/user/:user_id
+        //@route    GET api/user/
         //@desc     Get user by email
         //@access   Public
-        this.get('/:user_id', auth, this.userController.getUser);
+        this.get('/', auth, this.userController.getUser);
     }
 }

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const PrivateRoute = () => {
     const navigate = useNavigate();
-    const userState = useSelector((store) => store.user);
+    const userState = useSelector((store) => store.userReducer);
 
     useEffect(() => {
         if (!userState.isAuthenticated) {

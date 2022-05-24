@@ -11,7 +11,7 @@ api.isCancel = axios.isCancel;
 export { api };
 
 const defaultTokenExtractor = (state) => ({
-    userToken: state.user.userToken,
+    userToken: state.userReducer.userToken,
 });
 
 export const authenticationProvider = (

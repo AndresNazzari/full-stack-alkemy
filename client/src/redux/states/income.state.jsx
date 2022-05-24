@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FetchState } from '../../constants/fetchState';
 
-export const incomeEmptyState = {
+export const initialState = {
     incomes: [],
     fetchState: FetchState.NOT_FETCHED,
     error: null,
 };
 
 export const incomeSlice = createSlice({
-    name: 'income',
-    initialState: incomeEmptyState,
+    name: 'incomeReducer',
+    initialState: initialState,
     reducers: {
         createIncome: (state, action) => {},
         removeIncome: (state, action) => {},

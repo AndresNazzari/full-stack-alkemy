@@ -1,18 +1,26 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import { authenticationProvider } from './config/networkConfig';
-import { logout } from './redux/actions/login.action';
-
+import setAuthToken from './util/setAuthToken';
+import { loadUserAction, logout } from './redux/actions/user.action';
+import { setToken } from './redux/states/user.state';
 import PrivateRoute from './routing/PrivateRoute';
 import Home from './components/home/Home';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
 import Error from './components/Error';
 
-authenticationProvider(store, logout);
+if (localStorage.userToken) {
+    setAuthToken(localStorage.userToken);
+    store.dispatch(setToken({ userToken: localStorage.userToken }));
+}
 
 function App() {
+    useEffect(() => {
+        store.dispatch(loadUserAction());
+    }, []);
+
     return (
         <Provider store={store}>
             <BrowserRouter>

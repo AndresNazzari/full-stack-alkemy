@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, clearLoginError } from '../../redux/actions/login.action';
-
+import { login, loadUserAction, logout } from '../../redux/actions/user.action';
+import Alert from '../layout/Alert';
 import styles from '../../styles/Login.module.scss';
 import logoLogin from '../../assets/login/logo-login.png';
 import { ReactComponent as ErrorIcon } from '../../assets/errorIcon.svg';
@@ -10,15 +10,14 @@ import { ReactComponent as ErrorIcon } from '../../assets/errorIcon.svg';
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const userState = useSelector((store) => store.user);
 
-    const loginError = false;
+    const userState = useSelector((store) => store.userReducer);
 
     useEffect(() => {
         userState.isAuthenticated && navigate('/home');
-        dispatch(clearLoginError());
     }, [userState.isAuthenticated, navigate, dispatch]);
 
     const handleLogin = (e) => {
@@ -28,6 +27,7 @@ const Login = () => {
 
     return (
         <>
+            <Alert />
             <div className={styles.loginPage}>
                 <div className={styles.loginLeft}>
                     <div>
@@ -46,21 +46,18 @@ const Login = () => {
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder='Enter your email'
                             className={userState.error ? styles.inputError : ''}
+                            autoComplete='on'
                         />
                         <label htmlFor='password'>Password</label>
                         <input
                             type='password'
                             id='passwordInput'
+                            minLength={6}
                             placeholder='Enter your password'
                             onChange={(e) => setPassword(e.target.value)}
                             className={userState.error ? styles.inputError : ''}
+                            autoComplete='on'
                         />
-                        {loginError && (
-                            <div className={styles.loginError}>
-                                <ErrorIcon className='loginErrorIcon' />{' '}
-                                <span>Email o Password incorrectos</span>
-                            </div>
-                        )}
 
                         <button type='submit'>Login</button>
                         <p>
