@@ -1,23 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, clearLoginError } from '../../redux/actions/login.action';
+
 import styles from '../../styles/Login.module.scss';
 import logoLogin from '../../assets/login/logo-login.png';
 import { ReactComponent as ErrorIcon } from '../../assets/errorIcon.svg';
-import { useDispatch, useSelector } from 'react-redux';
 
 const Login = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const userState = useSelector((store) => store.user);
-    const isAuthenticated = false;
+
     const loginError = false;
 
     useEffect(() => {
-        isAuthenticated && navigate('/home');
-    }, [isAuthenticated, navigate]);
+        userState.isAuthenticated && navigate('/home');
+        dispatch(clearLoginError());
+    }, [userState.isAuthenticated, navigate, dispatch]);
 
-    const login = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
+        dispatch(login(email, password));
     };
 
     return (
@@ -31,19 +37,23 @@ const Login = () => {
                 </div>
 
                 <div className={styles.loginRight}>
-                    <form action='' onSubmit={(e) => login(e)}>
+                    <form action='' onSubmit={(e) => handleLogin(e)}>
                         <h2>Please log in</h2>
                         <label htmlFor='email'>Email</label>
                         <input
-                            type='email'
-                            id='email'
+                            type='text'
+                            id='emailInput'
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder='Enter your email'
+                            className={userState.error ? styles.inputError : ''}
                         />
                         <label htmlFor='password'>Password</label>
                         <input
                             type='password'
-                            id='password'
+                            id='passwordInput'
                             placeholder='Enter your password'
+                            onChange={(e) => setPassword(e.target.value)}
+                            className={userState.error ? styles.inputError : ''}
                         />
                         {loginError && (
                             <div className={styles.loginError}>

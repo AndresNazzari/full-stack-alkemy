@@ -1,18 +1,18 @@
 import { useNavigate, Outlet } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAuthContext } from '../context/auth.context';
+import { useDispatch, useSelector } from 'react-redux';
 
 const PrivateRoute = () => {
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuthContext();
+    const userState = useSelector((store) => store.user);
 
     useEffect(() => {
-        if (!isAuthenticated) {
+        if (!userState.isAuthenticated) {
             {
                 navigate('/');
             }
         }
-    }, [isAuthenticated, navigate]);
+    }, [userState.isAuthenticated, navigate]);
 
     return <Outlet />;
 };
