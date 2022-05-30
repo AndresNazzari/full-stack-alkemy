@@ -5,25 +5,21 @@ import { useEffect } from 'react';
 import { FetchState } from '../../constants/fetchState';
 import Dashboard from '../layout/dashboard/Dashboard';
 import Spinner from '../layout/spinner/Spinner';
-const Home = () => {
+
+const Incomes = () => {
     const dispatch = useDispatch();
     const fetchingStateUser = useSelector(
         (store) => store.userReducer.fetchState
     );
-
-    useEffect(() => {
-        dispatch(loadUserAction());
-    }, []);
-
     return (
         <Dashboard>
             {fetchingStateUser !== FetchState.FETCHED ? (
                 <Spinner />
             ) : (
-                <div>Home</div>
+                <div>Incomes Home</div>
             )}
         </Dashboard>
     );
 };
 
-export default Home;
+export default Incomes;

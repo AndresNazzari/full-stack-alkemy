@@ -1,0 +1,14 @@
+main {
+    height: 100%;
+    background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}

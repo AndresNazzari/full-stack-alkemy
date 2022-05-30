@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signup } from '../../redux/actions/user.action';
-import Alert from '../layout/Alert';
-import styles from '../../styles/Signup.module.scss';
-import logoSignup from '../../assets/signup/logo-signup.png';
-import { ReactComponent as ErrorIcon } from '../../assets/errorIcon.svg';
+import Alert from '../layout/alert/Alert';
+import styles from './style/Signup.module.scss';
+import logoSignup from './assets/logo-signup.png';
+import { ReactComponent as ErrorIcon } from './assets/errorIcon.svg';
 import { setAlertAction } from '../../redux/actions/alert.action';
 
 const Signup = () => {

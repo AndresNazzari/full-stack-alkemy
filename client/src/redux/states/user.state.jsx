@@ -17,7 +17,7 @@ export const userSlice = createSlice({
     initialState: initialState,
     reducers: {
         clearLogin: (state, action) => {
-            localStorage.removeItem('token');
+            localStorage.removeItem('userToken');
             return initialState;
         },
         requestLogin: (state, action) => ({

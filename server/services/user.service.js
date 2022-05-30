@@ -46,6 +46,9 @@ export default class UserService {
     }
 
     async getUser(email) {
-        return await this.knex.select('*').from('users').where('email', email);
+        return await this.knex
+            .select('user_id', 'name', 'email', 'avatar')
+            .from('users')
+            .where('email', email);
     }
 }
