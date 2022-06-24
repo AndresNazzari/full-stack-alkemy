@@ -2,7 +2,9 @@ import styles from './style/Navbar.module.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { ReactComponent as HomeIcon } from './assets/home1.svg';
 import { ReactComponent as IncomeIcon } from './assets/income.svg';
-import { ReactComponent as OrientadorIcon } from './assets/expense.svg';
+import { ReactComponent as ExpenseIcon } from './assets/expense.svg';
+import { ReactComponent as OperationsIcon } from './assets/operations.svg';
+
 import logo from './assets/logo.png';
 
 const Navbar = () => {
@@ -20,34 +22,41 @@ const Navbar = () => {
                     <Link
                         to='/home'
                         className={
-                            location.pathname.includes('home')
+                            location.pathname == '/home'
                                 ? `${styles.navLink} ${styles.navLinkOn}`
                                 : `${styles.navLink}`
-                        }
-                    >
+                        }>
                         <HomeIcon className={styles.navIcon} />
-                        <span>Inicio</span>
+                        <span>Home</span>
                     </Link>
                     <Link
-                        to='/incomes'
+                        to='/operations'
                         className={
-                            location.pathname.includes('incomes')
+                            location.pathname == '/operations'
                                 ? `${styles.navLink} ${styles.navLinkOn}`
                                 : `${styles.navLink}`
-                        }
-                    >
+                        }>
+                        <OperationsIcon className={styles.navIcon} />
+                        <span>Operations</span>
+                    </Link>
+                    <Link
+                        to='/operations/incomes'
+                        className={
+                            location.pathname == '/operations/incomes'
+                                ? `${styles.navLink} ${styles.navLinkOn}`
+                                : `${styles.navLink}`
+                        }>
                         <IncomeIcon className={styles.navIcon} />
                         <span>Incomes</span>
                     </Link>
                     <Link
-                        to='/expenses'
+                        to='/operations/expenses'
                         className={
-                            location.pathname.includes('expenses')
+                            location.pathname == '/operations/expenses'
                                 ? `${styles.navLink} ${styles.navLinkOn}`
                                 : `${styles.navLink}`
-                        }
-                    >
-                        <OrientadorIcon className={styles.navIcon} />
+                        }>
+                        <ExpenseIcon className={styles.navIcon} />
                         <span>Expenses</span>
                     </Link>
                 </div>

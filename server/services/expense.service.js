@@ -7,17 +7,18 @@ export default class ExpenseService {
     }
 
     async addExpense(concept, amount, date, category_id, user_id) {
-        return await this.knex('expense').insert({
+        const expense_id = await this.knex('expense').insert({
             concept,
             amount,
             date,
             category_id,
             user_id,
         });
+        return { expense_id: expense_id[0], concept, amount, date, category_id, user_id };
     }
 
-    async getExpenses() {
-        return await this.knex('expense').select('*');
+    async getExpenses(user_id) {
+        return await this.knex('expense').select('*').where({ user_id });
     }
 
     async updateExpense(expense_id, concept, amount, date, category_id) {

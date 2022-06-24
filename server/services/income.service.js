@@ -7,17 +7,18 @@ export default class UserService {
     }
 
     async addIncome(concept, amount, date, category_id, user_id) {
-        return await this.knex('income').insert({
+        const income_id = await this.knex('income').insert({
             concept,
             amount,
             date,
             category_id,
             user_id,
         });
+        return { income_id: income_id[0], concept, amount, date, category_id, user_id };
     }
 
-    async getIncomes() {
-        return await this.knex('income').select('*');
+    async getIncomes(user_id) {
+        return await this.knex('income').select('*').where({ user_id });
     }
 
     async updateIncome(income_id, concept, amount, date, category_id) {

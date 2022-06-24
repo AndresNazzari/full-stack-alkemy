@@ -16,6 +16,20 @@ export const createTables = async () => {
                 table.string('created_at');
             });
             console.log(`📄 Table created: ${'categories'}`);
+
+            ///temporal hasta que se agrege seccion de crear categorias
+            const categories = [
+                { name: 'Work', created_at: new Date() },
+                { name: 'Dinner', created_at: new Date() },
+                { name: 'Investments', created_at: new Date() },
+                { name: 'Gifts', created_at: new Date() },
+                { name: 'Transportation', created_at: new Date() },
+                { name: 'Medical & Healthcare', created_at: new Date() },
+                { name: 'Personal Spending', created_at: new Date() },
+                { name: 'Saving', created_at: new Date() },
+            ];
+            await db('categories').insert(categories);
+            console.log(`📄 categories created`);
         } else {
             console.log(`📄 ${'categories'} table already exists`);
         }

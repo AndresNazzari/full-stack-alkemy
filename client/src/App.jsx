@@ -6,11 +6,11 @@ import setAuthToken from './util/setAuthToken';
 import { loadUserAction } from './redux/actions/user.action';
 import { setToken } from './redux/states/user.state';
 import PrivateRoute from './routing/PrivateRoute';
-import Home from './components/home/Home';
+import Home from './views/home/Home';
 import Login from './components/login/Login';
 import Signup from './components/signup/Signup';
-import Incomes from './components/incomes/Incomes';
-import Expenses from './components/expenses/Expenses';
+import NewOperations from './views/Operations/NewOperations';
+import Operations from './views/Operations/Operations';
 import Error from './components/Error';
 
 if (localStorage.userToken) {
@@ -32,11 +32,11 @@ function App() {
                     <Route exact path='/home' element={<PrivateRoute />}>
                         <Route exact path='/home' element={<Home />} />
                     </Route>
-                    <Route exact path='/incomes' element={<PrivateRoute />}>
-                        <Route exact path='/incomes' element={<Incomes />} />
+                    <Route exact path='/operations' element={<PrivateRoute />}>
+                        <Route exact path='/operations' element={<NewOperations />} />
                     </Route>
-                    <Route exact path='/expenses' element={<PrivateRoute />}>
-                        <Route exact path='/expenses' element={<Expenses />} />
+                    <Route exact path='/operations/:op' element={<PrivateRoute />}>
+                        <Route exact path='/operations/:op' element={<Operations />} />
                     </Route>
                     <Route path='*' element={<Login />} />
                 </Routes>

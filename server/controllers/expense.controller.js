@@ -20,7 +20,7 @@ export default class ExpenseController {
 
         const { concept, amount, category_id, user_id, date } = req.body;
         try {
-            await this.expenseService.addExpense(
+            const newExpense = await this.expenseService.addExpense(
                 concept,
                 amount,
                 date,
@@ -28,7 +28,7 @@ export default class ExpenseController {
                 user_id
             );
 
-            res.status(200).json({ msg: 'Expense created' });
+            res.status(200).json({ msg: 'Expense created', newExpense });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');
@@ -37,7 +37,8 @@ export default class ExpenseController {
 
     async getExpenses(req, res) {
         try {
-            const expenses = await this.expenseService.getExpenses();
+            const user_id = req.query.user_id;
+            const expenses = await this.expenseService.getExpenses(user_id);
             res.status(200).json({ expenses });
         } catch (error) {
             console.error(error.message);

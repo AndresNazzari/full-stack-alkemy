@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { FetchState } from '../../constants/fetchState';
 import {
     clearLogin,
     requestLogin,
@@ -7,6 +6,7 @@ import {
     requestLoginFailed,
     requestLoadSuccess,
 } from '../states/user.state';
+import { Endpoints } from '../../constants/endpoints';
 import setAuthToken from '../../util/setAuthToken';
 import { setAlertAction } from '../actions/alert.action';
 
@@ -15,14 +15,12 @@ export const loadUserAction = () => async (dispatch) => {
         setAuthToken(localStorage.userToken);
         try {
             dispatch(requestLogin());
-            const response = await axios.get('http://localhost:8080/api/user');
+            const response = await axios.get(Endpoints.GET_USER);
             dispatch(requestLoadSuccess(response.data));
         } catch (error) {
             const errors = error.response.data.errors;
             if (errors) {
-                errors.forEach((error) =>
-                    dispatch(setAlertAction(error.msg, 'danger'))
-                );
+                errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
             }
             dispatch(requestLoginFailed(errors));
         }
@@ -38,15 +36,12 @@ export const login = (email, password) => async (dispatch, getState) => {
             },
         };
         const body = JSON.stringify({ email, password });
-        const url = `http://localhost:8080/api/user/auth`;
-        const res = await axios.post(url, body, config);
+        const res = await axios.post(Endpoints.POST_AUTH_USER, body, config);
         dispatch(requestLoginSuccess(res.data));
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {
-            errors.forEach((error) =>
-                dispatch(setAlertAction(error.msg, 'danger'))
-            );
+            errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
         }
         dispatch(requestLoginFailed(errors));
     }
@@ -67,15 +62,12 @@ export const signup =
                 },
             };
             const body = JSON.stringify({ name, email, password });
-            const url = `http://localhost:8080/api/user`;
-            const res = await axios.post(url, body, config);
+            const res = await axios.post(Endpoints.POST_SIGNUP_USER, body, config);
             dispatch(requestLoginSuccess(res.data));
         } catch (error) {
             const errors = error.response.data.errors;
             if (errors) {
-                errors.forEach((error) =>
-                    dispatch(setAlertAction(error.msg, 'danger'))
-                );
+                errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
             }
             dispatch(requestLoginFailed(errors));
         }

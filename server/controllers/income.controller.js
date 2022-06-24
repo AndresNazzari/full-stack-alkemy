@@ -20,7 +20,7 @@ export default class IncomeController {
 
         const { concept, amount, date, category_id, user_id } = req.body;
         try {
-            await this.incomeService.addIncome(
+            const newIncome = await this.incomeService.addIncome(
                 concept,
                 amount,
                 date,
@@ -28,7 +28,7 @@ export default class IncomeController {
                 user_id
             );
 
-            res.status(200).json({ msg: 'Income created' });
+            res.status(200).json({ msg: 'Income created', newIncome });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');
@@ -37,8 +37,9 @@ export default class IncomeController {
 
     async getIncomes(req, res) {
         try {
-            const Incomes = await this.incomeService.getIncomes();
-            res.status(200).json({ Incomes });
+            const user_id = req.query.user_id;
+            const incomes = await this.incomeService.getIncomes(user_id);
+            res.status(200).json({ incomes });
         } catch (error) {
             console.error(error.message);
             res.status(500).send('Server Error');

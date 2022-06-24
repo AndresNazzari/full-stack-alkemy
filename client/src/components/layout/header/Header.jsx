@@ -3,8 +3,13 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { logout, loadUserAction } from '../../../redux/actions/user.action';
-import profileIcon from './assets/profile.svg';
-import exitIcon from './assets/exit.svg';
+import { ReactComponent as ProfileIcon } from './assets/profile.svg';
+import { ReactComponent as HomeIcon } from './assets/home1.svg';
+import { ReactComponent as IncomeIcon } from './assets/income.svg';
+import { ReactComponent as ExpenseIcon } from './assets/expense.svg';
+import { ReactComponent as OperationsIcon } from './assets/operations.svg';
+import { ReactComponent as ExitIcon } from './assets/exit.svg';
+import Home from '../../../views/home/Home';
 
 const Header = () => {
     const dispatch = useDispatch();
@@ -21,9 +26,10 @@ const Header = () => {
 
     const setTitle = () => {
         return (
-            (location.pathname.includes('home') && `Welcome, ${name}!`) ||
-            (location.pathname.includes('incomes') && 'Incomes') ||
-            (location.pathname.includes('expenses') && 'Expenses')
+            (location.pathname == '/home' && `Welcome, ${name}!`) ||
+            (location.pathname == '/operations/incomes' && 'Incomes') ||
+            (location.pathname == '/operations/expenses' && 'Expenses') ||
+            (location.pathname == '/operations' && 'Operations')
         );
     };
 
@@ -34,10 +40,9 @@ const Header = () => {
                 onClick={(e) =>
                     e.target.id === styles.modalProfileContainer &&
                     setModalPerfilOpen(!modalPerfilOpen)
-                }
-            ></div>
+                }></div>
             <header className={styles.header}>
-                <p className={styles.headerWelcome}>{setTitle()}</p>
+                <p>{setTitle()}</p>
                 <div className={styles.headerAvatarContainer}>
                     <img
                         src={avatar}
@@ -50,28 +55,53 @@ const Header = () => {
                             modalPerfilOpen
                                 ? `${styles.modalProfile} ${styles.modalProfile_visible}`
                                 : `${styles.modalProfile} `
-                        }
-                    >
+                        }>
                         <div>
-                            <img src={profileIcon} alt='' />
+                            <HomeIcon className={styles.modalIcon} />
+                            <Link to='/home' onClick={() => setModalPerfilOpen(!modalPerfilOpen)}>
+                                <span>Home</span>
+                            </Link>
+                        </div>
+                        {/*  <div>
+                            <ProfileIcon className={styles.modalIcon} />
                             <Link
                                 to='/home/profile'
-                                onClick={() =>
-                                    setModalPerfilOpen(!modalPerfilOpen)
-                                }
-                            >
+                                onClick={() => setModalPerfilOpen(!modalPerfilOpen)}>
                                 <span>My profile</span>
+                            </Link>
+                        </div> */}
+                        <div>
+                            <OperationsIcon className={styles.modalIcon} />
+                            <Link
+                                to='/operations'
+                                onClick={() => setModalPerfilOpen(!modalPerfilOpen)}>
+                                <span>Operations</span>
                             </Link>
                         </div>
                         <div>
-                            <img src={exitIcon} alt='' />
+                            <IncomeIcon className={styles.modalIcon} />
+                            <Link
+                                to='/operations/incomes'
+                                onClick={() => setModalPerfilOpen(!modalPerfilOpen)}>
+                                <span>Incomes</span>
+                            </Link>
+                        </div>
+                        <div>
+                            <ExpenseIcon className={styles.modalIcon} />
+                            <Link
+                                to='/operations/expenses'
+                                onClick={() => setModalPerfilOpen(!modalPerfilOpen)}>
+                                <span>Expenses</span>
+                            </Link>
+                        </div>
+                        <div>
+                            <ExitIcon className={styles.modalIcon} />
                             <Link
                                 to='/'
                                 onClick={() => {
                                     setModalPerfilOpen(!modalPerfilOpen);
                                     logOutHandler();
-                                }}
-                            >
+                                }}>
                                 <span>Log Out</span>
                             </Link>
                         </div>

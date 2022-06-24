@@ -1,7 +1,13 @@
 .navBar {
-    min-width: 234px;
-    border: 1px solid rgba(218, 222, 235, 0.5);
-    min-height: 100vh;
+    width: 0px;
+    min-width: 0px;
+    border: none;
+
+    @media screen and (min-width: 768px) {
+        min-width: 234px;
+        border: 1px solid rgba(218, 222, 235, 0.5);
+        min-height: 100vh;
+    }
 }
 
 .navLogo {
@@ -17,6 +23,7 @@
     list-style: none;
     display: flex;
     flex-direction: column;
+    color: rgb(46, 56, 77);
 }
 
 .navIcon {
