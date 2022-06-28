@@ -5,7 +5,6 @@ import { login, loadUserAction, logout } from '../../redux/actions/user.action';
 import Alert from '../layout/alert/Alert';
 import styles from './style/Login.module.scss';
 import logoLogin from './assets/logo-login.png';
-import { ReactComponent as ErrorIcon } from './assets/errorIcon.svg';
 
 const Login = () => {
     const navigate = useNavigate();

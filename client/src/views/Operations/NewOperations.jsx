@@ -103,9 +103,7 @@ const NewOperations = () => {
         return (
             <div>
                 <components.Option {...props}>
-                    <label className={props.isSelected ? styles.selectedLabel : null}>
-                        {props.label}
-                    </label>
+                    <label className={props.isSelected ? styles.selectedLabel : null}>{props.label}</label>
                 </components.Option>
             </div>
         );
@@ -172,9 +170,6 @@ const NewOperations = () => {
         setFormData({ ...formData, date: date });
     };
 
-    const onAmountClick = (e) => {
-        setFormData({ ...formData, amount: '' });
-    };
     useEffect(() => {
         dispatch(loadCategoriesAction());
     }, [dispatch]);
@@ -193,12 +188,7 @@ const NewOperations = () => {
                             ? `Edit income operation`
                             : `Edit expense operation`}
                     </h1>
-                    <div
-                        className={
-                            !op
-                                ? `${styles.btnContainer}`
-                                : `${styles.btnContainer} ${styles.noBtnContainer}`
-                        }>
+                    <div className={!op ? `${styles.btnContainer}` : `${styles.btnContainer} ${styles.noBtnContainer}`}>
                         <button
                             className={
                                 operation === 'income'
